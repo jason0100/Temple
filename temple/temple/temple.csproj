@@ -1,0 +1,181 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\css\style.css.map" />
+    <None Include="wwwroot\favicon.ico" />
+    <None Include="wwwroot\fonts\Ubuntu\Ubuntu-Bold.eot" />
+    <None Include="wwwroot\fonts\Ubuntu\Ubuntu-Bold.ttf" />
+    <None Include="wwwroot\fonts\Ubuntu\Ubuntu-Bold.woff" />
+    <None Include="wwwroot\fonts\Ubuntu\Ubuntu-Bold.woff2" />
+    <None Include="wwwroot\fonts\Ubuntu\Ubuntu-Light.eot" />
+    <None Include="wwwroot\fonts\Ubuntu\Ubuntu-Light.ttf" />
+    <None Include="wwwroot\fonts\Ubuntu\Ubuntu-Light.woff" />
+    <None Include="wwwroot\fonts\Ubuntu\Ubuntu-Light.woff2" />
+    <None Include="wwwroot\fonts\Ubuntu\Ubuntu-Medium.eot" />
+    <None Include="wwwroot\fonts\Ubuntu\Ubuntu-Medium.ttf" />
+    <None Include="wwwroot\fonts\Ubuntu\Ubuntu-Medium.woff" />
+    <None Include="wwwroot\fonts\Ubuntu\Ubuntu-Medium.woff2" />
+    <None Include="wwwroot\fonts\Ubuntu\Ubuntu-Regular.eot" />
+    <None Include="wwwroot\fonts\Ubuntu\Ubuntu-Regular.ttf" />
+    <None Include="wwwroot\fonts\Ubuntu\Ubuntu-Regular.woff" />
+    <None Include="wwwroot\fonts\Ubuntu\Ubuntu-Regular.woff2" />
+    <None Include="wwwroot\images\dashboard\circle.png" />
+    <None Include="wwwroot\images\dashboard\circle.svg" />
+    <None Include="wwwroot\images\dashboard\img_1.jpg" />
+    <None Include="wwwroot\images\dashboard\img_2.jpg" />
+    <None Include="wwwroot\images\dashboard\img_3.jpg" />
+    <None Include="wwwroot\images\dashboard\img_4.jpg" />
+    <None Include="wwwroot\images\faces-clipart\pic-1.png" />
+    <None Include="wwwroot\images\faces-clipart\pic-2.png" />
+    <None Include="wwwroot\images\faces-clipart\pic-3.png" />
+    <None Include="wwwroot\images\faces-clipart\pic-4.png" />
+    <None Include="wwwroot\images\favicon.png" />
+    <None Include="wwwroot\images\logo-mini.svg" />
+    <None Include="wwwroot\images\logo.jpg" />
+    <None Include="wwwroot\images\logo.svg" />
+    <None Include="wwwroot\images\sprites\blue.png" />
+    <None Include="wwwroot\images\sprites\dark.png" />
+    <None Include="wwwroot\images\sprites\flag.png" />
+    <None Include="wwwroot\images\sprites\green.png" />
+    <None Include="wwwroot\images\sprites\jsgrid-icons.png" />
+    <None Include="wwwroot\images\sprites\red.png" />
+    <None Include="wwwroot\images\sprites\yellow.png" />
+    <None Include="wwwroot\js\chart.js" />
+    <None Include="wwwroot\js\dashboard.js" />
+    <None Include="wwwroot\js\file-upload.js" />
+    <None Include="wwwroot\js\hoverable-collapse.js" />
+    <None Include="wwwroot\js\misc.js" />
+    <None Include="wwwroot\js\off-canvas.js" />
+    <None Include="wwwroot\js\site.js" />
+    <None Include="wwwroot\js\todo.js" />
+    <None Include="wwwroot\js\todolist.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.css" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
+    <None Include="wwwroot\lib\bootstrap\LICENSE" />
+    <None Include="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
+    <None Include="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+    <None Include="wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt" />
+    <None Include="wwwroot\lib\jquery-validation\dist\additional-methods.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\additional-methods.min.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.min.js" />
+    <None Include="wwwroot\lib\jquery-validation\LICENSE.md" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.js" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.min.js" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.min.map" />
+    <None Include="wwwroot\lib\jquery\LICENSE.txt" />
+    <None Include="wwwroot\scss\components\_badges.scss" />
+    <None Include="wwwroot\scss\components\_bootstrap-progress.scss" />
+    <None Include="wwwroot\scss\components\_breadcrumbs.scss" />
+    <None Include="wwwroot\scss\components\_buttons.scss" />
+    <None Include="wwwroot\scss\components\_cards.scss" />
+    <None Include="wwwroot\scss\components\_checkbox-radio.scss" />
+    <None Include="wwwroot\scss\components\_dropdown.scss" />
+    <None Include="wwwroot\scss\components\_forms.scss" />
+    <None Include="wwwroot\scss\components\_icons.scss" />
+    <None Include="wwwroot\scss\components\_lists.scss" />
+    <None Include="wwwroot\scss\components\_preview.scss" />
+    <None Include="wwwroot\scss\components\_tables.scss" />
+    <None Include="wwwroot\scss\components\_todo-list.scss" />
+    <None Include="wwwroot\scss\landing-screens\_auth.scss" />
+    <None Include="wwwroot\scss\mixins\_animation.scss" />
+    <None Include="wwwroot\scss\mixins\_background.scss" />
+    <None Include="wwwroot\scss\mixins\_badges.scss" />
+    <None Include="wwwroot\scss\mixins\_blockqoute.scss" />
+    <None Include="wwwroot\scss\mixins\_breadcrumbs.scss" />
+    <None Include="wwwroot\scss\mixins\_buttons.scss" />
+    <None Include="wwwroot\scss\mixins\_cards.scss" />
+    <None Include="wwwroot\scss\mixins\_misc.scss" />
+    <None Include="wwwroot\scss\mixins\_pagination.scss" />
+    <None Include="wwwroot\scss\mixins\_popovers.scss" />
+    <None Include="wwwroot\scss\mixins\_text.scss" />
+    <None Include="wwwroot\scss\mixins\_tooltips.scss" />
+    <None Include="wwwroot\scss\style.scss" />
+    <None Include="wwwroot\scss\_dashboard.scss" />
+    <None Include="wwwroot\scss\_demo.scss" />
+    <None Include="wwwroot\scss\_fonts.scss" />
+    <None Include="wwwroot\scss\_footer.scss" />
+    <None Include="wwwroot\scss\_functions.scss" />
+    <None Include="wwwroot\scss\_layouts.scss" />
+    <None Include="wwwroot\scss\_misc.scss" />
+    <None Include="wwwroot\scss\_navbar.scss" />
+    <None Include="wwwroot\scss\_reset.scss" />
+    <None Include="wwwroot\scss\_sidebar.scss" />
+    <None Include="wwwroot\scss\_typography.scss" />
+    <None Include="wwwroot\scss\_utilities.scss" />
+    <None Include="wwwroot\scss\_variables.scss" />
+    <None Include="wwwroot\scss\_vertical-wrapper.scss" />
+    <None Include="wwwroot\scss\_widget-grid.scss" />
+    <None Include="wwwroot\vendors\chart.js\Chart.min.js" />
+    <None Include="wwwroot\vendors\css\vendor.bundle.base.css" />
+    <None Include="wwwroot\vendors\js\bootstrap.min.js.map" />
+    <None Include="wwwroot\vendors\js\vendor.bundle.base.js" />
+    <None Include="wwwroot\vendors\mdi\css\materialdesignicons.min.css" />
+    <None Include="wwwroot\vendors\mdi\css\materialdesignicons.min.css.map" />
+    <None Include="wwwroot\vendors\mdi\fonts\materialdesignicons-webfont.eot" />
+    <None Include="wwwroot\vendors\mdi\fonts\materialdesignicons-webfont.ttf" />
+    <None Include="wwwroot\vendors\mdi\fonts\materialdesignicons-webfont.woff" />
+    <None Include="wwwroot\vendors\mdi\fonts\materialdesignicons-webfont.woff2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.10.0-beta0002" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
+    <PackageReference Include="Microsoft.AspNet.WebPages" Version="3.2.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SQLite" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
+    <PackageReference Include="Nancy" Version="2.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\API\API.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.Development.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="appsettings.Production.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1production_1json__JsonSchema="" properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
+</Project>

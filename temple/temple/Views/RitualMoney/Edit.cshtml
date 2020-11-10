@@ -1,0 +1,98 @@
+﻿@model temple.Models.RitualMoneyRecord.DetailViewModel
+@{
+    ViewData["Title"] = "修改發財金紀錄";
+}
+
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">修改發財金紀錄</h4>
+                @if (TempData["isSuccess"] != null)
+                {
+                    @if (TempData["isSuccess"].ToString() == "false")
+                    {
+
+                        <p class="text-danger">@TempData["msg"]</p>
+                        <a class="btn btn-primary" asp-action="Get">返回</a>
+
+
+                    }
+                    }
+                @if(Model!=null)
+                {
+
+            <form asp-action="Edit" autocomplete="off">
+
+                <div id="errorMsg" asp-validation-summary="All" class="text-danger"></div>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-form-label" asp-for="Name"></label>
+                        <input class="form-control" asp-for="Name" readonly>
+
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-form-label" asp-for="Identity"></label>
+                        <input class="form-control" asp-for="Identity" readonly>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-form-label" asp-for="Record.RitualMoneyRecordId"></label>
+                        <input class="form-control" asp-for="Record.RitualMoneyRecordId" readonly>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-form-label" asp-for="Record.BorrowDate"></label>
+                        <input class="form-control" asp-for="Record.BorrowDate" readonly>
+
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-form-label" asp-for="Record.BorrowAmount">借取金額</label>
+
+                        <input class="form-control" asp-for="Record.BorrowAmount">
+                        <span asp-validation-for="Record.BorrowAmount" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-form-label" asp-for="Record.ReturnDate"></label>
+                        <input class="form-control" asp-for="Record.ReturnDate" readonly>
+
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-form-label" asp-for="Record.ReturnAmount">還願金額</label>
+                        @if (Model.Record.ReturnAmount == null)
+                        {
+                            <input class="form-control" asp-for="Record.ReturnAmount" readonly>
+                        }
+                        else
+                        {
+                            <input class="form-control" asp-for="Record.ReturnAmount">
+                        }
+
+                        <span asp-validation-for="Record.ReturnAmount" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <button class="btn btn-inverse-danger" type="submit"><i class="mdi mdi-delete-forever"></i>儲存</button>
+                <a class="btn btn-primary" asp-action="GetRitualMoney">取消</a>
+
+                <input id="msg" hidden value="@TempData["msg"]" />
+                @if (TempData["isSuccess"] != null)
+                {
+                    <input id="isSuccess" hidden value="@TempData["isSuccess"].ToString()" />
+                }
+                <div id="msgDiv"></div>
+
+            </form>
+
+
+                }
+
+
+            </div>
+        </div>
+    </div>
+</div>

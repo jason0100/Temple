@@ -1,0 +1,82 @@
+﻿@model temple.Models.FinancialRecord.FinancialRecord
+@{
+    ViewData["Title"] = "刪除支出紀錄";
+}
+
+
+
+
+<div class="page-header">
+    <h3 class="page-title">廟宇支出交易紀錄</h3>
+      <input id="msg" hidden value="@TempData["msg"]" />
+</div>
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">刪除支出紀錄</h4>
+
+                <div class="rank-table">
+                    <form asp-action="Delete">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>時間</th>
+                                    <th>項目</th>
+                                    <th>廠商名稱</th>
+                                    <th>付款方式</th>
+                                    <th>數量</th>
+                                    <th>金額</th>
+                                    <th>應還款日期</th>
+                                    <th>備註</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    <tr>
+
+
+                                        <td>@Model.CreateDate</td>
+                                        <td>@Model.FinancialItem.Name</td>
+                                        <td>@Model.CustomerName</td>
+                                        <td>@Model.PayType</td>
+                                        <td>@Model.Quantity</td>
+                                        <td>@Model.Amount</td>
+                                        <td>@Model.ReturnDate</td>
+                                        <td>@Model.Notes</td>
+
+
+                                    </tr>
+
+                                }
+
+                            </tbody>
+                        </table>
+                        <button class="btn btn-inverse-danger" type="submit"><i class="mdi mdi-delete-forever"></i>刪除</button>
+                        <a class="btn btn-primary" asp-action="GetExpenses" asp-route-Type="支出">取消</a>
+                    </form>
+
+
+                      <input id="msg" hidden value="@TempData["msg"]" />
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts{
+    <script nonce="KUY8VewuvyUYVEIvEFue4vwyiuf">
+ 
+    var msg = '@TempData["msg"]';
+    var IsSuccess = '@TempData["IsSuccess"]';
+    console.log(IsSuccess + msg);
+    if (msg != '') {
+        showAlert(IsSuccess, msg);
+    }
+
+
+    </script>
+    }

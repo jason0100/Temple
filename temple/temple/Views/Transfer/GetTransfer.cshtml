@@ -1,0 +1,121 @@
+﻿@model temple.Models.Transfer.QueryViewModel
+@{
+    ViewData["Title"] = "紀錄管理";
+}
+
+    <div class="page-header">
+        <h3 class="page-title">銀行轉帳記錄</h3>
+        <input id="msg" hidden value="@TempData["msg"]" />
+        @if (TempData["isSuccess"] != null)
+        {
+            <input id="isSuccess" hidden value="@TempData["isSuccess"].ToString()" />
+        }
+        <div id="msgDiv"></div>
+    </div>
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">紀錄管理</h4>
+                <form method="get" asp-action="GetTransfer">
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-md-8 no-padding rank-space">
+                            <div class="row justify-content-center">
+                                <input type="text" class="col-10 col-md form-control margin-right margin-top" asp-for="KeyWord" placeholder="關鍵字">
+                                <select class="col-10 col-md form-control margin-right margin-top" id="" asp-for="Year">
+                                    <option value="">年份</option>
+                                    @for (int i = 2019; i < DateTime.Now.Year + 1; i++)
+                                    {
+                                        <option value=@i>@i</option>
+                                    }
+
+                                </select>
+                                <select class="col-10 col-md form-control margin-right margin-top" asp-for="Month">
+                                    <option value="">月份</option>
+                                    <option value="1">一月</option>
+                                    <option value="2">二月</option>
+                                    <option value="3">三月</option>
+                                    <option value="4">四月</option>
+                                    <option value="5">五月</option>
+                                    <option value="6">六月</option>
+                                    <option value="7">七月</option>
+                                    <option value="8">八月</option>
+                                    <option value="9">九月</option>
+                                    <option value="10">十月</option>
+                                    <option value="11">十一月</option>
+                                    <option value="12">十二月</option>
+                                </select>
+                                <span class="col-12 col-md-2 nav-link text-center no-padding margin-top btn-text">
+                                    <button type="submit" class="btn btn-primary"><i class="mdi mdi-magnify"></i>搜尋</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="rank-table">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>時間</th>
+                                    <th>項目名稱</th>
+                                    <th>類別</th>
+                                    <th>匯入銀行</th>
+                                    <th>匯款帳號</th>
+                                    <th>金額</th>
+                                    <th>備註</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.TransferRecords != null)
+                                {
+                                    @foreach (var i in Model.TransferRecords)
+                                    {
+                                        <tr>
+                                            <td>@i.CreateDate</td>
+                                            <td>@i.eventName</td>
+                                            <td>@i.TransferType</td>
+                                            <td>@i.BankName</td>
+                                            <td>@i.BankAccount</td>
+                                            <td>@String.Format("{0,-10:C0}", i.Amount)</td>
+                                            <td>@i.Notes</td>
+                                            <td class="btn-space">
+                                                <a class="btn btn-primary" asp-action="Edit" asp-route-id=@i.Id><i class="mdi mdi-grease-pencil"></i>編輯</a>
+                                                <a class="btn btn-inverse-danger" asp-action="DeleteTransfer" asp-route-id="@i.Id"><i class="mdi mdi-delete-forever"></i>刪除</a>
+                                            </td>
+                                        </tr>
+                                    }
+
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <span class="nav-link text-center">
+                    <a class="btn btn-gradient-primary mt-4" id="ExportExcelBtn" href="">匯出excel</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script nonce="KUY8VewuvyUYVEIvEFue4vwyiuf">
+      $('document').ready(function () {
+        //產生excel連結
+        $('#ExportExcelBtn').attr('href', 'ExportExcel/?' + $('form').serialize());
+      })
+
+
+ 
+    var msg = '@TempData["msg"]';
+    var IsSuccess = '@TempData["IsSuccess"]';
+    console.log(IsSuccess + msg);
+    if (msg != '') {
+        showAlert(IsSuccess, msg);
+    }
+
+
+    </script>
+}

@@ -1,0 +1,86 @@
+﻿@model temple.Models.Transfer.TransferRecord
+@{
+    ViewData["Title"] = "編輯轉帳紀錄";
+}
+
+<div class="page-header">
+    <h3 class="page-title">銀行轉帳記錄</h3>
+      <input id="msg" hidden value="@TempData["msg"]" />
+</div>
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">編輯轉帳紀錄</h4>
+                <!-- <p class="form-title card-description">基本資料</p> -->
+                <form class="forms-sample" method="post" asp-action="Edit">
+                    <div id="errorMsg" asp-validation-summary="All" class="text-danger"></div>
+                    <div class="row">
+                        <input hidden asp-for="Id" />
+                        <div class="col-md-4 form-group">
+                            <label class="col-form-label" for="">項目名稱</label>
+                            <input class="form-control" asp-for="eventName">
+                            <span asp-validation-for="eventName" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label class="col-form-label" for="">金額</label>
+                            <input class="form-control" asp-for="Amount">
+                            <span asp-validation-for="Amount" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label class="col-form-label" for="">方式</label>
+                            <div class="row">
+                                <div class="col-md-4 form-group">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" asp-for="TransferType" checked value="轉出" />轉出<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" asp-for="TransferType" value="轉入">轉入<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="TransferType" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label class="col-form-label" for="">匯款銀行</label>
+                            <input class="form-control" asp-for="BankName">
+                            <span asp-validation-for="BankName" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-8 form-group">
+                            <label class="col-form-label" for="">匯款帳號</label>
+                            <input t class="form-control" asp-for="BankAccount">
+                            <span asp-validation-for="BankAccount" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label class="col-form-label" for="">備註</label>
+                            <textarea class="form-control" asp-for="Notes"></textarea>
+                            <span asp-validation-for="Notes" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">儲存</button>
+                    <a class="btn btn-light" asp-action="GetTransfer">取消</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script nonce="KUY8VewuvyUYVEIvEFue4vwyiuf">
+
+
+    var msg = '@TempData["msg"]';
+    var IsSuccess = '@TempData["IsSuccess"]';
+    console.log(IsSuccess + msg);
+    if (msg != '') {
+        showAlert(IsSuccess, msg);
+    }
+
+
+    </script>
+}

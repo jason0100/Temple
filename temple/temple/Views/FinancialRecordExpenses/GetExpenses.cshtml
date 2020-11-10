@@ -1,0 +1,125 @@
+﻿@model temple.Models.FinancialRecord.QueryModel
+@{
+    ViewData["Title"] = "支出紀錄管理";
+}
+
+<div class="page-header">
+    <h3 class="page-title">廟宇支出交易紀錄</h3>
+    <input id="msg" hidden value="@TempData["msg"]" />
+    @if (TempData["isSuccess"] != null)
+    {
+        <input id="isSuccess" hidden value="@TempData["isSuccess"].ToString()" />
+    }
+    <div id="msgDiv"></div>
+</div>
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">支出紀錄管理</h4>
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-8 no-padding rank-space">
+                        <form method="get" asp-action="GetExpenses">
+                            <div class="row justify-content-center">
+                                <input hidden asp-for="Type" value="支出" />
+                                <select class="form-control col-10 col-md form-control margin-right margin-top" asp-for="ItemId" asp-items="@TempData["dropdown"] as List<SelectListItem>">
+                                    <option value="">請選擇交易項目</option>
+                                </select>
+                                @*<input type="text" class="col-10 col-md form-control margin-right margin-top" placeholder="交易項目" asp-for="ItemName">*@
+
+                                <select class="col-10 col-md form-control margin-right margin-top" asp-for="Year">
+                                    <option>年份</option>
+                                    @for (int i = 2019; i < DateTime.Now.Year + 1; i++)
+                                    {
+                                        <option value=@i>@i</option>
+                                    }
+
+                                </select>
+                                <select class="col-10 col-md form-control margin-right margin-top" asp-for="Month">
+                                    <option>月份</option>
+                                    @for (int i = 1; i < 13; i++)
+                                    {
+                                        <option value=@i>@i 月</option>
+                                    }
+
+                                </select>
+                                <span class="col-12 col-md-2 nav-link text-center no-padding margin-top btn-text">
+                                    <button type="submit" class="btn btn-secondary"><i class="mdi mdi-magnify"></i>搜尋</button>
+                                </span>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="rank-table">
+                    <div class="table-responsive">
+
+
+                        <table class="table table-striped expense-color">
+                            <thead>
+                                <tr class="expense-color">
+                                    <th>時間</th>
+                                    <th>項目</th>
+                                    <th>廠商名稱</th>
+                                    <th>付款方式</th>
+                                    <th>數量</th>
+                                    <th>金額</th>
+                                    <th>應還款日期</th>
+                                    <th>備註</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.FinancialRecords != null)
+                                {
+                                    @foreach (var i in Model.FinancialRecords)
+                                    {
+                                        <tr class="expense-color">
+                                            <td>@i.CreateDate</td>
+                                            <td>@i.FinancialItem.Name</td>
+                                            <td>@i.CustomerName</td>
+
+                                            <td>@i.PayType</td>
+                                            <td>@i.Quantity</td>
+                                            <td>@String.Format("{0,-10:C0}", i.Amount)</td>
+                                            <td>@(i.ReturnDate)</td>
+                                            <td>@i.Notes</td>
+                                            <td class="btn-space">
+                                                <a class="btn btn-secondary" asp-action="Edit" asp-route-id="@i.Id" asp-route-Type="支出"><i class="mdi mdi-grease-pencil"></i>編輯</a>
+                                                <a class="btn btn-inverse-danger" asp-action="Delete" asp-route-id="@i.Id"><i class="mdi mdi-delete-forever"></i>刪除</a>
+
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <span class="nav-link text-center">
+                    <a class="btn btn-gradient-primary mt-4" id="ExportExcelBtn">匯出excel</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script nonce="KUY8VewuvyUYVEIvEFue4vwyiuf">
+      $('document').ready(function () {
+        //產生excel連結
+        $('#ExportExcelBtn').attr('href', 'ExportExcel/?Type=支出&' + $('form').serialize());
+      })
+
+    var msg = '@TempData["msg"]';
+    var IsSuccess = '@TempData["IsSuccess"]';
+    //console.log(IsSuccess + msg);
+    if (msg != '') {
+        showAlert(IsSuccess, msg);
+    }
+
+
+    </script>
+}

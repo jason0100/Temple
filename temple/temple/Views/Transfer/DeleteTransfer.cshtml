@@ -1,0 +1,75 @@
+﻿@model temple.Models.Transfer.TransferRecord
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="page-header">
+    <h3 class="page-title">刪除轉帳記錄</h3>
+      <input id="msg" hidden value="@TempData["msg"]" />
+</div>
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">刪除轉帳紀錄</h4>
+                <form method="post" asp-action="DeleteTransfer">
+                    <input hidden asp-for="Id" />
+                    <div class="rank-table">
+                        @if (Model != null)
+                        {
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>時間</th>
+                                        <th>項目名稱</th>
+                                        <th>類別</th>
+                                        <th>匯入銀行</th>
+                                        <th>匯款帳號</th>
+                                        <th>金額</th>
+                                        <th>備註</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr>
+
+                                        <td>@Model.CreateDate</td>
+                                        <td>@Model.eventName</td>
+                                        <td>@Model.TransferType</td>
+                                        <td>@Model.BankName</td>
+                                        <td>@Model.BankAccount</td>
+                                        <td>@Model.Amount</td>
+                                        <td>@Model.Notes</td>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                        }
+
+                    </div>
+                    <button class="btn btn-inverse-danger" type="submit"><i class="mdi mdi-delete-forever"></i>刪除</button>
+                    <a class="btn btn-primary" asp-action="GetTransfer">取消</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script nonce="KUY8VewuvyUYVEIvEFue4vwyiuf">
+    $('#cancelBtn').click(function () {
+        $('input:not([name="__RequestVerificationToken"])').val("");
+    })
+
+  
+    var msg = '@TempData["msg"]';
+    var IsSuccess = '@TempData["IsSuccess"]';
+    console.log(IsSuccess + msg);
+    if (msg != '') {
+        showAlert(IsSuccess, msg);
+    }
+
+
+    </script>
+}

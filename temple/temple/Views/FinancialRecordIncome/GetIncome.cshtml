@@ -1,0 +1,125 @@
+﻿@model temple.Models.FinancialRecord.QueryModel
+@{
+    ViewData["Title"] = "收入紀錄管理";
+}
+
+    <div class="page-header">
+        <h3 class="page-title">廟宇收入交易紀錄</h3>
+        <input id="msg" hidden value="@TempData["msg"]" />
+        @if (TempData["isSuccess"] != null)
+        {
+            <input id="isSuccess" hidden value="@TempData["isSuccess"].ToString()" />
+        }
+        <div id="msgDiv"></div>
+    </div>
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">收入紀錄管理</h4>
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-8 no-padding rank-space">
+                        <form method="get" asp-action="GetIncome">
+                            <div class="row justify-content-center">
+
+                                <input hidden asp-for="Type" value="收入" />
+                                @*   <input type="text" class="col-10 col-md form-control margin-right margin-top" placeholder="交易項目" asp-for="ItemName">*@
+                                <select class="form-control col-10 col-md form-control margin-right margin-top" asp-for="ItemId" asp-items="@TempData["dropdown"] as List<SelectListItem>">
+                                    <option value="">請選擇交易項目</option>
+                                </select>
+                                <select class="col-10 col-md form-control margin-right margin-top" asp-for="Year">
+                                    <option>年份</option>
+                                    @for (int i = 2019; i < DateTime.Now.Year + 1; i++)
+                                    {
+                                        <option value=@i>@i</option>
+                                    }
+
+                                </select>
+                                <select class="col-10 col-md form-control margin-right margin-top" asp-for="Month">
+                                    <option>月份</option>
+                                    @for (int i = 1; i < 13; i++)
+                                    {
+                                        <option value=@i>@i 月</option>
+                                    }
+
+                                </select>
+                                <span class="col-12 col-md-2 nav-link text-center no-padding margin-top btn-text">
+                                    <button type="submit" class="btn btn-primary"><i class="mdi mdi-magnify"></i>搜尋</button>
+                                </span>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="rank-table">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>編號</th>
+                                    <th>姓名</th>
+                                    <th>時間</th>
+                                    <th>交易項目</th>
+                                    <th>數量</th>
+                                    <th>金額</th>
+                                    <th>位置</th>
+                                    <th>到期日</th>
+                                    <th>備註</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.FinancialRecords != null)
+                                {
+                                    @foreach (var i in Model.FinancialRecords)
+                                    {
+                                        <tr>
+                                            <td>@i.Id</td>
+                                            <td>@i.CustomerName</td>
+                                            <td>@i.CreateDate</td>
+                                            <td>@i.FinancialItem.Name</td>
+                                            <td>@i.Quantity</td>
+                                            <td>@String.Format("{0,-10:C0}", i.Amount)</td>
+                                            <td>@i.Place-@i.Position</td>
+                                            @if (i.DueDate != null)
+                                            {
+                                                <td>@i.DueDate</td>
+                                            }
+                                            else
+                                            {
+                                                <td></td>
+                                            }
+                                            <td>@i.Notes</td>
+                                            <td class="btn-space">
+                                                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@i.Id" asp-route-Type="收入"><i class="mdi mdi-grease-pencil"></i>編輯</a>
+                                                <a class="btn btn-inverse-danger" asp-action="Delete" asp-route-id="@i.Id"><i class="mdi mdi-delete-forever"></i>刪除</a>
+                                                <a class="btn btn-secondary "><i class="mdi mdi-fax"></i>列印感謝狀</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <span class="nav-link text-center">
+                    <a class="btn btn-gradient-primary mt-4" id="ExportExcelBtn">匯出excel</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script nonce="KUY8VewuvyUYVEIvEFue4vwyiuf">
+      $('document').ready(function () {
+        //產生excel連結
+        $('#ExportExcelBtn').attr('href', 'ExportExcel/?Type=收入&' + $('form').serialize());
+      })
+
+  
+
+    </script>
+}

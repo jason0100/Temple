@@ -1,0 +1,183 @@
+﻿@model temple.Models.FriendsController.PostViewModel
+@{
+    ViewData["Title"] = "編輯友宮資料";
+}
+
+
+    <div class="page-header">
+        <h3 class="page-title">友宮資料管理</h3>
+        <input id="msg" hidden value="@TempData["msg"]" />
+        @if (TempData["isSuccess"] != null)
+        {
+            <input id="isSuccess" hidden value="@TempData["isSuccess"].ToString()" />
+        }
+        <div id="msgDiv"></div>
+    </div>
+<div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">編輯友宮資料</h4>
+                <p class="form-title card-description">基本資料</p>
+                <form class="forms-sample" asp-action="EditFriend" autocomplete="off">
+                    <div id="errorMsg" asp-validation-summary="All" class="text-danger"></div>
+                    <div class="row">
+                        <input hidden asp-for="friend.Id" />
+                        <div class="col-md-3 form-group required">
+                            <label class="col-form-label" asp-for="friend.Name"></label>
+                            <input type="text" class="form-control" asp-for="friend.Name">
+                            <span asp-validation-for="friend.Name" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label class="col-form-label" asp-for="friend.MainGod"></label>
+                            <input type="text" class="form-control" asp-for="friend.MainGod">
+                            <span asp-validation-for="friend.MainGod" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label class="col-form-label" asp-for="friend.BirthDate"></label>
+                            <input type="text" class="form-control" asp-for="friend.BirthDate" id="BirthDateInput">
+                            <span asp-validation-for="friend.BirthDate" class="text-danger"></span>
+                        </div>
+                        @*<div class="col-md-3 form-group">
+                                <label class="col-form-label" asp-for="ActivityDate"></label>
+                                <input type="text" class="form-control" asp-for="ActivityDate">
+                                <span asp-validation-for="ActivityDate" class="text-danger"></span>
+                            </div>*@
+                        <div class="col-md-12 form-group">
+                            <label class="col-form-label" asp-for="friend.Notes">備註</label>
+                            <input type="text" class="form-control" asp-for="friend.Notes">
+                            <span asp-validation-for="friend.Notes" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <p class="form-title card-description">聯絡方式</p>
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <label class="col-form-label" asp-for="friend.ContactName">聯絡人</label>
+                            <input class="form-control" asp-for="friend.ContactName">
+                            <span asp-validation-for="friend.ContactName" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label class="col-form-label" asp-for="friend.Phone">市話</label>
+                            <input class="form-control" asp-for="friend.Phone">
+                            <span asp-validation-for="friend.Phone" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label class="col-form-label" asp-for="friend.CellPhone">手機</label>
+                            <input class="form-control" asp-for="friend.CellPhone">
+                            <span asp-validation-for="friend.CellPhone" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 form-group required">
+                            <label class="col-form-label" asp-for="friend.CityId">縣市</label>
+                            <select class="form-control" id="selectCity" asp-for="friend.CityId" asp-items="Model.CityList">
+                                <option value="" disabled selected>請選擇</option>
+
+                            </select>
+                            <span asp-validation-for="friend.CityId" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4 form-group required">
+                            <label class="col-form-label" asp-for="friend.TownshipId">鄉鎮區</label>
+                            <select class="form-control" id="selectTownShip" asp-for="friend.TownshipId" asp-items="Model.TownShipList">
+                                <option value="" disabled selected>請選擇</option>
+                            </select>
+                            <span asp-validation-for="friend.TownshipId" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label class="col-form-label" >郵遞區號</label>
+                            <input id="ZipInput" class="form-control" asp-for="friend.Zip" readonly>
+                            
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label class="col-form-label" asp-for="friend.Address">地址</label>
+                            <input class="form-control" asp-for="friend.Address">
+                            <span asp-validation-for="friend.Address" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2">儲存</button>
+                    <a class="btn btn-light" id="cancelBtn" asp-action="GetFriend">取消</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{ 
+
+    <script nonce="KUY8VewuvyUYVEIvEFue4vwyiuf">
+    $(document).ready(function () {
+          $("#BirthDateInput").datepicker({
+                dateFormat: "mm-dd",
+                changeYear: true,
+                //yearRange: "2019:2029"
+                  beforeShow: function() {
+                    setTimeout(function(){
+                        $("#BirthDateInput").attr("autocomplete", "off");
+                    }, 0);
+                 }
+            });
+        //==========Load city township zip=================
+        var dataObj;
+        $.get('/Friends/CityList').done(function (data) {
+            //console.log(data)
+
+            console.log(data.isSuccess)
+            dataObj = $.parseJSON(data.data);
+            if (data.isSuccess) {
+                $.each(dataObj, function (i, v) {
+                    //console.log(v.name)
+                    $("#selectCity").append($("<option></option>").attr("value", v.id).text(v.name));
+                })
+            }
+            else {
+
+                showAlert('false','城市清單載入錯誤')
+            }
+
+        })
+
+        $('#selectCity').on('change', function () {
+
+            $('#selectTownShip option:not(:first)').remove();
+             $.each(dataObj[$('#selectCity').val() - 1].townShips, function (i, v) {
+                   $("#selectTownShip").append($("<option></option>").attr("value", v.id).text(v.name));
+             })
+
+            $('#selectTownShip,#ZipInput').val('');
+
+        })
+
+        $('#selectTownShip').on('change', function () {
+            //console.log('township=' + $("#selectTownShip").val())
+            var townShipObj = dataObj[$('#selectCity').val() - 1].townShips
+
+            $.each(townShipObj, function (i, v) {
+                //console.log(v.zip)
+                if (v.id == $("#selectTownShip").val()) {
+                    $('#ZipInput').val(v.zip);
+                    return false;
+                }
+
+            });
+
+        })
+        //==========END Load city township zip=================
+
+
+        $('#cancelBtn').click(function () {
+        $('input').val("");
+         })
+
+  
+    var msg = '@TempData["msg"]';
+    var IsSuccess = '@TempData["IsSuccess"]';
+    console.log(IsSuccess + msg);
+    if (msg != '') {
+        showAlert(IsSuccess, msg);
+    }
+    })
+
+
+
+
+    </script>
+}

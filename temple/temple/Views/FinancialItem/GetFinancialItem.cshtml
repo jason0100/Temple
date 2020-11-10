@@ -1,0 +1,113 @@
+﻿@model temple.Models.FinancialItem.QueryViewModel
+@{
+    ViewData["Title"] = "財務項目清單";
+}
+
+    <div class="page-header">
+        <h3 class="page-title">財務項目清單</h3>
+          <input id="msg" hidden value="@TempData["msg"]" />
+    </div>
+<div class="row">
+    <div class="col-lg-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">收入</h4>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>廟宇收入</th>
+                        
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ if (Model.FinancialItems != null)
+                            {
+                                @foreach (var i in Model.FinancialItems)
+                                {
+                                    if (i.Type == "收入")
+                                    {
+                                        <tr id="@i.Id">
+                                            
+                                            <td>@i.Name</td>
+                                            <td class="btn-space">
+                                                <button class="btn btn-inverse-danger item-delete-btn" data-id="@i.Id"><i class="mdi mdi-delete-forever"></i>刪除</button>
+                                                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@i.Id"><i class="mdi mdi-grease-pencil"></i>編輯</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                 }
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">支出</h4>
+                <table class="table expense-color">
+                    <thead>
+                        <tr class="expense-color">
+                            <th>廟宇支出</th>
+                           
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ if (Model.FinancialItems != null)
+                            {
+                                @foreach (var i in Model.FinancialItems)
+                                {
+                                    if (i.Type == "支出")
+                                    {
+                                        <tr class="expense-color" id="@i.Id">
+                                            <td>@i.Name</td>
+                                            <td class="btn-space">
+                                                <button class="btn btn-inverse-danger item-delete-btn" data-id="@i.Id"><i class="mdi mdi-delete-forever"></i>刪除</button>
+                                                <a class="btn btn-primary"  asp-action="Edit" asp-route-id="@i.Id"><i class="mdi mdi-grease-pencil"></i>編輯</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script nonce="KUY8VewuvyUYVEIvEFue4vwyiuf">
+      //function deleteItem(id) {
+      //    if (confirm('確認刪除此項目?')) {
+      //         $('#'+id).remove()
+              
+      //          $.get("Delete", { id: id }).done(function (data) {
+      //              showAlert(data.isSuccess, data.message)
+      //               //console.log('data.isSuccess='+data.isSuccess)
+      //              if (data.isSuccess == true) {
+      //                  //console.log('data.IsSuccess='+data.isSuccess)
+      //                   $('#'+id).remove()
+                        
+      //              }
+      //          })
+      //      }
+      //  }
+
+   
+
+    $(document).ready(function () {
+
+    var msg = '@TempData["msg"]';
+    var IsSuccess = '@TempData["IsSuccess"]';
+    //console.log(IsSuccess + msg);
+    if (msg != '') {
+        showAlert(IsSuccess, msg);
+    }
+    })
+
+</script>

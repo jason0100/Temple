@@ -1,0 +1,104 @@
+﻿@model temple.Models.FriendsController.QueryViewModel
+@{
+    ViewData["Title"] = "友宮清單";
+}
+    <div class="page-header">
+        <h3 class="page-title">友宮資料管理</h3>
+        <input id="msg" hidden value="@TempData["msg"]" />
+        @if (TempData["isSuccess"] != null)
+        {
+            <input id="isSuccess" hidden value="@TempData["isSuccess"].ToString()" />
+        }
+        <div id="msgDiv"></div>
+    </div>
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">友宮資料</h4>
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-6 no-padding rank-space">
+
+                        <form method="get" asp-action="GetFriend">
+                            <div class="row justify-content-center">
+                                <input type="text" class="col-10 col-md-6 form-control margin-right margin-top" asp-for="Name" placeholder="友宮名稱">
+
+                                <button type="submit" class="btn btn-primary"><i class="mdi mdi-magnify"></i>搜尋</button>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>友宮名稱</th>
+                                <th>主祀神明</th>
+                                <th>聖誕日期</th>
+                                <th>地址</th>
+                                <th>電話</th>
+                                <th>聯絡人</th>
+                                <th>備註</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ if (Model.Friends != null)
+                                {
+                                    @foreach (var i in Model.Friends)
+                                    {
+                                        <tr>
+                                            <td>@i.Name</td>
+                                            <td>@i.MainGod</td>
+                                            <td>農曆 @i.BirthDate</td>
+                                            <td>@i.townShip.Zip-@i.city.Name @i.townShip.Name @i.Address</td>
+                                            <td>@i.Phone</td>
+                                            <td>@i.ContactName</td>
+                                            <td>@i.Notes</td>
+                                            <td style="white-space: nowrap">
+                                                <a class="btn btn-primary" asp-action="EditFriend" asp-route-id="@i.Id"><i class="mdi mdi-grease-pencil"></i>編輯</a>
+                                                <a class="btn btn-inverse-danger" asp-action="DeleteFriend" asp-route-id="@i.Id"><i class="mdi mdi-delete-forever"></i>刪除</a>
+                                            </td>
+                                        </tr>
+                                    }
+
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">活動日曆</h4>
+                <iframe src="https://calendar.google.com/calendar/embed?src=jifu3568123%40gmail.com&ctz=Asia%2FTaipei" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+
+    <script nonce="KUY8VewuvyUYVEIvEFue4vwyiuf">
+
+
+  
+    var msg = '@TempData["msg"]';
+    var isSuccess = '@TempData["IsSuccess"]';
+    //console.log("IsSuccess=" + isSuccess+ msg);
+    if (msg != '') {
+        showAlert(isSuccess, msg);
+    }
+
+
+    </script>
+
+}

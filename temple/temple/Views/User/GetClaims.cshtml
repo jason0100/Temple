@@ -1,0 +1,17 @@
+﻿@model temple.Models.Users.GetClaimViewModel
+@{
+    ViewData["Title"] = "GetClaims";
+}
+
+<h1>GetClaims</h1>
+@*<div>@Model.token</div>*@
+@if (Model.claims != null)
+{
+    @foreach (var c in Model.claims)
+    {
+        <li>@c.Type:@c.Value</li>
+    }
+
+}
+    access_token = @TempData["access_token"]
+    refresh_token=@TempData["refresh_token"]

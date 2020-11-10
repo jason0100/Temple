@@ -1,0 +1,67 @@
+﻿@model temple.Models.FinancialItem.FinancialItem
+@{
+    ViewData["Title"] = "編輯財務項目";
+}
+
+
+<div class="page-header">
+    <h3 class="page-title">財務項目設定</h3>
+      <input id="msg" hidden value="@TempData["msg"]" />
+</div>
+<div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">編輯財務項目</h4>
+                <form class="forms-sample" method="post" asp-action="Edit" autocomplete="off">
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label class="col-form-label" asp-for="Name"></label>
+                            <input type="text" class="form-control" asp-for="Name">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label class="col-form-label" asp-for="Type"></label>
+                            <div class="row">
+                                <div class="col-md-3 form-group">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" value="收入" asp-for="Type" checked>廟宇收入<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" value="支出" asp-for="Type">廟宇支出<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <span asp-validation-for="Type" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">儲存</button>
+                    <a type="button" class="btn btn-light" asp-action="GetFinancialItem">取消</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script nonce="KUY8VewuvyUYVEIvEFue4vwyiuf">
+    $(document).ready(function () {
+
+
+
+    var msg = '@TempData["msg"]';
+    var IsSuccess = '@TempData["IsSuccess"]';
+    console.log(IsSuccess + msg);
+    if (msg != '') {
+        showAlert(IsSuccess, msg);
+    }
+    })
+
+    </script>
+}

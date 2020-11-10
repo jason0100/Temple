@@ -1,0 +1,108 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="page-header">
+
+    <input id="msg" hidden value="@TempData["msg"]" />
+    @if (TempData["isSuccess"] != null)
+    {
+        <input id="isSuccess" hidden value="@TempData["isSuccess"].ToString()" />
+    }
+    <div id="msgDiv"></div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">代辦事項</h4>
+                <div class="add-items d-flex">
+
+                    <input id="new_task" type="text" class="form-control todo-list-input" placeholder="要做什麼呢?">
+                    <button class="add btn btn-primary font-weight-bold todo-list-add-btn white-nowrap" id="add-task">新增</button>
+
+
+                </div>
+                <div class="list-wrapper">
+                    <ul class="d-flex flex-column-reverse todo-list todo-list-custom">
+                        @if (ViewBag.ToDoList != null)
+                        {
+                            @foreach (var i in ViewBag.ToDoList)
+                            {
+                                @if (i.IsDone)
+                                {
+                                    <li class="completed">
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="checkbox" type="checkbox" checked="checked" data-id="@i.Id"> @i.Subject
+                                            </label>
+                                        </div>
+                                        <i class="remove mdi mdi-close-circle-outline" data-id="@i.Id"></i>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="checkbox" type="checkbox" data-id="@i.Id"> @i.Subject
+                                            </label>
+                                        </div>
+                                        <i class="remove mdi mdi-close-circle-outline" data-id="@i.Id"></i>
+                                    </li>
+
+                                }
+
+                            }
+                        }
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">光明燈到期提醒（一個月前）</h4>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>姓名</th>
+                            <th>位置</th>
+                            <th>到期日</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ViewBag.ToBeExpired != null)
+                        {@foreach (var i in ViewBag.ToBeExpired)
+                            {
+
+                                <tr>
+                                    <td>@i.CustomerName</td>
+                                    <td>@i.Place-@i.Position</td>
+                                    <td><label class="text-danger">@i.DueDate</label></td>
+                                </tr>
+                            }
+                    }
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">活動日曆</h4>
+                <iframe class="google-calendar" src="https://calendar.google.com/calendar/embed?src=jifu3568123%40gmail.com&ctz=Asia%2FTaipei" frameborder="0" scrolling="no"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+

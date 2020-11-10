@@ -1,0 +1,303 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewData["Title"]</title>
+    <!-- End Required meta tags -->
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="~/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="~/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    @*<link rel="stylesheet" href="~/css/site.css" />*@
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="~/css/style.css">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="~/images/favicon.png" />
+    <!--jquery ui datepicker-->
+    <link href="~/lib/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+    <!--END jquery ui datepicker-->
+    @RenderSection("header", required: false)
+
+</head>
+<body>
+
+
+    <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+            <a class="navbar-brand brand-logo" asp-controller="Home" asp-action="Index"><img src="~/images/logo.svg" alt="logo" /></a>
+            <a class="navbar-brand brand-logo-mini" asp-controller="Home" asp-action="Index"><img src="~/images/logo-mini.svg" alt="logo" /></a>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-stretch">
+            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                <span class="mdi mdi-menu"></span>
+            </button>
+            <ul class="navbar-nav navbar-nav-right">
+                <li class="nav-item nav-profile dropdown">
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+
+                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                            <div class="nav-profile-img">
+                                <img src="~/images/faces/man.svg" alt="image">
+                                <span class="availability-status online"></span>
+                            </div>
+                            <div class="nav-profile-text">
+                                <p class="mb-1 text-black">@Context.User.Claims.FirstOrDefault(m => m.Type == "Name").Value</p>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                            <a class="dropdown-item" asp-controller="User" asp-action="ChangePassword">
+                                <i class="mdi mdi-lock-open mr-2"></i>更改密碼
+                            </a>
+                            <a class="dropdown-item" asp-controller="User" asp-action="Register">
+                                <i class="mdi mdi-account-plus mr-2"></i>註冊管理員
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" asp-controller="User" asp-action="Logout">
+                                <i class="mdi mdi-logout mr-2 text-danger"></i>登出
+                            </a>
+                        </div>
+
+                    }
+                    else
+                    {
+                        <a class="nav-link " asp-controller="User" asp-action="Login"> Login   </a>
+                    }
+
+
+
+
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+                        <i class="mdi mdi-bell-outline"></i>
+                        <span hidden class="count-symbol bg-danger"></span>
+                    </a>
+                    <div id="notifyData" class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                        <h6 class="p-3 mb-0">購買通知</h6>
+                        <div class="dropdown-divider"></div>
+
+                        <div class="dropdown-divider"></div>
+                     
+                        @*<h6 class="p-3 mb-0 text-center">查看全部通知</h6>*@
+                        <a class="dropdown-item " id="setReadBtn" href="#">  <h6 class="p-3 mx-auto text-center">設為已讀</h6>                      
+                        </a>
+
+                    </div>
+                </li>
+
+                <li class="nav-item d-none d-lg-block full-screen-link">
+                    <a class="nav-link">
+                        <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
+                    </a>
+                </li>
+            </ul>
+            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                <span class="mdi mdi-menu"></span>
+            </button>
+        </div>
+    </nav>
+    <!-- partial -->
+
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:./partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <ul class="nav ">
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#Member" aria-expanded="false" aria-controls="Member">
+                        <span class="menu-title">信徒個人資料</span>
+                        <i class="menu-arrow"></i>
+                        <i class="mdi mdi-account-multiple menu-icon"></i>
+                    </a>
+                    <div class="collapse" id="Member">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"> <a class="nav-link" asp-controller="Member" asp-action="CreateMember">新增</a></li>
+                            <li class="nav-item"> <a class="nav-link" asp-controller="Member" asp-action="GetMember">信徒資料</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#FinancialRecordIncome" aria-expanded="false" aria-controls="FinancialRecordIncome">
+                        <span class="menu-title">廟宇收入交易紀錄</span>
+                        <i class="menu-arrow"></i>
+                        <i class="mdi mdi-arrow-left-bold menu-icon"></i>
+                    </a>
+                    <div class="collapse" id="FinancialRecordIncome">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"> <a class="nav-link" asp-controller="FinancialRecordIncome" asp-action="CreateIncome" asp-route-Type="收入">新增</a></li>
+                            <li class="nav-item"> <a class="nav-link" asp-controller="FinancialRecordIncome" asp-action="GetIncome" asp-route-Type="收入">收入紀錄</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#FinancialRecordExpenses" aria-expanded="false" aria-controls="FinancialRecordExpenses">
+                        <span class="menu-title">廟宇支出交易紀錄</span>
+                        <i class="menu-arrow"></i>
+                        <i class="mdi mdi-arrow-right-bold menu-icon"></i>
+                    </a>
+                    <div class="collapse" id="FinancialRecordExpenses">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"> <a class="nav-link" asp-controller="FinancialRecordExpenses" asp-action="CreateExpenses" asp-route-Type="支出">新增</a></li>
+                            <li class="nav-item"> <a class="nav-link" asp-controller="FinancialRecordExpenses" asp-action="GetExpenses" asp-route-Type="支出">支出紀錄</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#RitualMoney" aria-expanded="false" aria-controls="RitualMoney">
+                        <span class="menu-title">大土地發財金</span>
+                        <i class="menu-arrow"></i>
+                        <i class="mdi mdi-database menu-icon"></i>
+                    </a>
+                    <div class="collapse" id="RitualMoney">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"> <a class="nav-link" asp-controller="RitualMoney" asp-action="CreateRitualMoney">借用發財金</a></li>
+                            <li class="nav-item"> <a class="nav-link" asp-controller="RitualMoney" asp-action="ReturnRitualMoney">發財金還願</a></li>
+                            <li class="nav-item"> <a class="nav-link" asp-controller="RitualMoney" asp-action="GetRitualMoney">發財金紀錄</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#FinancialReport" aria-expanded="false" aria-controls="FinancialReport">
+                        <span class="menu-title">年度財務報表</span>
+                        <i class="menu-arrow"></i>
+                        <i class="mdi mdi-chart-areaspline menu-icon"></i>
+                    </a>
+                    <div class="collapse" id="FinancialReport">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"> <a class="nav-link" asp-controller="FinancialReport" asp-action="GetReport" asp-route-Type="收入">收入報表</a></li>
+                            <li class="nav-item"> <a class="nav-link" asp-controller="FinancialReport" asp-action="GetReport" asp-route-Type="支出">支出報表</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#Friends" aria-expanded="false" aria-controls="Friends">
+                        <span class="menu-title">友宮資料管理</span>
+                        <i class="menu-arrow"></i>
+                        <i class="mdi mdi-bank menu-icon"></i>
+                    </a>
+                    <div class="collapse" id="Friends">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"> <a class="nav-link" asp-controller="Friends" asp-action="CreateFriend">新增</a></li>
+                            <li class="nav-item"> <a class="nav-link" asp-controller="Friends" asp-action="GetFriend">友宮活動資料</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#FinancialItem" aria-expanded="false" aria-controls="FinancialItem">
+                        <span class="menu-title">財務項目設定</span>
+                        <i class="menu-arrow"></i>
+                        <i class="mdi mdi-currency-usd menu-icon"></i>
+                    </a>
+                    <div class="collapse" id="FinancialItem">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"> <a class="nav-link" asp-controller="FinancialItem" asp-action="CreateFinancialItem">新增</a></li>
+                            <li class="nav-item"> <a class="nav-link" asp-controller="FinancialItem" asp-action="GetFinancialItem">收入和支出項目</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#Transfer" aria-expanded="false" aria-controls="Transfer">
+                        <span class="menu-title">銀行轉帳紀錄</span>
+                        <i class="menu-arrow"></i>
+                        <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+                    </a>
+                    <div class="collapse" id="Transfer">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"> <a class="nav-link" asp-controller="Transfer" asp-action="CreateTransfer">新增</a></li>
+                            <li class="nav-item"> <a class="nav-link" asp-controller="Transfer" asp-action="GetTransfer">轉帳紀錄</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item sidebar-actions">
+                    <span class="nav-link">
+                        <h4 class="font-weight-normal sidebar-title">APP相關</h4>
+                        <div class="mt-4">
+                            <button class="btn btn-lg btn-outline-primary mt-4" onclick="location.href='shopping_list.html'"><i class="mdi mdi-shopping icon-big"></i> 購買帳單</button>
+                        </div>
+                        <div class="mt-4">
+                            <button class="btn btn-lg btn-outline-primary mt-4" data-toggle="modal" data-target="#exampleModal"><i class="mdi mdi-image icon-big"></i> 上傳照片</button>
+                        </div>
+                    </span>
+                </li>
+
+            </ul>
+        </nav><!-- partial -->
+        <!-- 上傳照片 -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">上傳照片</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" name="files" id="inputGroupFile01"
+                                       aria-describedby="inputGroupFileAddon01" multiple>
+                                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                            </div>
+
+                        </div>
+                        <div id="fileList"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-dismiss="modal">關閉</button>
+                        <button type="button" class="btn btn-primary" id="uploadBtn">確定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main-panel">
+
+            <div class="content-wrapper">
+                @RenderBody()
+            </div>
+            <footer class="footer">
+                <div class="d-sm-flex justify-content-center">
+                    <span class="text-center d-sm-inline-block">Copyright © 2019 <a href="https://www.bootstrapdash.com/" target="_blank">Taipay</a> . All rights reserved.</span>
+                </div>
+            </footer>
+        </div>
+
+    </div>
+
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @*<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>*@
+    @*<script src="~/js/site.js" asp-append-version="true"></script>*@
+    <script src="~/js/site.js"></script>
+    <!-- plugins:js -->
+    <script src="~/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="~/js/off-canvas.js"></script>
+    <script src="~/js/hoverable-collapse.js"></script>
+    <script src="~/js/misc.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    <script src="~/js/file-upload.js"></script>
+    <!-- End custom js for this page -->
+    <!--jquery ui datepicker-->
+    <script src="~/lib/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/js/jquery.ba-dotimeout.js"></script>
+    <!--END jquery ui datepicker-->
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

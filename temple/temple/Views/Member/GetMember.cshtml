@@ -1,0 +1,100 @@
+﻿@model temple.Models.MemberData.QueryMemberViewModel
+@{
+    ViewData["Title"] = "信徒資料";
+
+}
+
+    <div class="page-header">
+        <h3 class="page-title">信徒個人資料</h3>
+        <input id="msg" hidden value="@TempData["msg"]" />
+        @if (TempData["isSuccess"] != null)
+        {
+            <input id="isSuccess" hidden value="@TempData["isSuccess"].ToString()" />
+        }
+        <div id="msgDiv"></div>
+    </div>
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">信徒資料</h4>
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-10 no-padding rank-space">
+                        <div id="errorMsg" asp-validation-summary="All" class="text-danger"></div>
+                        <div class="row justify-content-center">
+
+                            <form class="form-inline col-md-12" method="get" asp-action="GetMember">
+                                <input type="text" class="col-md-3 col-md form-control margin-right margin-top" placeholder="姓名" asp-for="Name">
+
+                                <input type="text" class="col-md-3 col-md form-control margin-right margin-top" placeholder="身分證字號" asp-for="Identity">
+
+                                <select class="col-md-2 form-control margin-right margin-top" asp-for="Gender">
+                                    <option value="">性別</option>
+                                    <option value="M">男</option>
+                                    <option value="F">女</option>
+                                </select>
+                                <span asp-validation-for="Gender" class="text-danger"></span>
+
+                                <span class="col-md-2 nav-link text-center no-padding margin-top btn-text">
+                                    <button type="submit" class="btn btn-primary"><i class="mdi mdi-magnify"></i>搜尋</button>
+                                </span>
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped ">
+                        <thead>
+                            <tr>
+                                <th>編號</th>
+                                <th>姓名</th>
+                                <th>性別</th>
+                                <th>身分證字號</th>
+                                <th>生日(國)</th>
+                                <th>生日(農)</th>
+                                <th>時辰</th>
+                                <th>生肖</th>
+                                <th>市話</th>
+                                <th>手機</th>
+                                <th>通訊地址</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.ResultModel != null)
+                            {
+                                if (Model.ResultModel.IsSuccess == true)
+                                {
+                                    @foreach (var i in Model.members)
+                                    {
+                                        <tr>
+                                            <td>@i.MemberId</td>
+                                            <td>@i.Name</td>
+                                            <td>@(i.Gender=="M"?"男":"女")</td>
+                                            <td>@i.Identity</td>
+                                            <td>@i.Birth</td>
+                                            <td>@i.LunarBirth</td>
+                                            <td>@i.TimeOfLunarBirth</td>
+                                            <td>@i.ZodiacAnimal</td>
+                                            <td>@i.Phone</td>
+                                            <td>@i.CellPhone</td>
+                                            <td class=" ">@i.Zip-@i.city.Name@i.townShip.Name@i.Address</td>
+                                            <td style="white-space: nowrap">
+                                                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@i.MemberId"><i class="mdi mdi-grease-pencil"></i>編輯</a>
+                                                <a class="btn btn-inverse-danger" asp-action="DeleteMember" asp-route-id="@i.MemberId"><i class="mdi mdi-delete-forever"></i>刪除</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

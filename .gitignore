@@ -1,0 +1,14 @@
+Temple 進度.xlsx
+~$Temple 進度.xlsx
+*.db
+temple/Temple.db-wal
+temple/Temple.db-shm
+temple/temple/obj/
+temple/temple/bin/
+temple.rar
+temple/API/obj/
+temple/API/bin/
+Linux 佈署steps.txt
+temple/.vs/
+doc/
+appsettings.*

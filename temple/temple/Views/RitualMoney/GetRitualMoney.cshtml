@@ -1,0 +1,131 @@
+﻿@model temple.Models.RitualMoneyRecord.QueryViewModel;
+
+@{
+    ViewData["Title"] = "發財金紀錄管理";
+}
+
+
+<!-- partial -->
+
+    <div class="page-header">
+        <h3 class="page-title">大土地發財金</h3>
+        <input id="msg" hidden value="@TempData["msg"]" />
+        @if (TempData["isSuccess"] != null)
+        {
+            <input id="isSuccess" hidden value="@TempData["isSuccess"].ToString()" />
+        }
+        <div id="msgDiv"></div>
+    </div>
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">紀錄管理</h4>
+                <div id="errorMsg" asp-validation-summary="All" class="text-danger"></div>
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-8 no-padding rank-space">
+                        <form method="get" asp-action="GetRitualMoney" >
+                            <div class="row justify-content-center">
+
+                                <input type="text" class="col-10 col-md form-control margin-right margin-top" asp-for="Name" placeholder="名字">
+                                <input type="text" class="col-10 col-md form-control margin-right margin-top" asp-for="Identity" placeholder="身分證字號">
+
+                                <select class="col-10 col-md form-control margin-right margin-top" asp-for="Year">
+                                    <option value="" selected>年份</option>
+                                    <option>2019</option>
+                                    <option>2020</option>
+                                </select>
+                                <select class="col-10 col-md form-control margin-right margin-top" asp-for="Month">
+                                    <option value="" selected>月份</option>
+                                    <option value="1">一月</option>
+                                    <option value="2">二月</option>
+                                    <option value="3">三月</option>
+                                    <option value="4">四月</option>
+                                    <option value="5">五月</option>
+                                    <option value="6">六月</option>
+                                    <option value="7">七月</option>
+                                    <option value="8">八月</option>
+                                    <option value="9">九月</option>
+                                    <option value="10">十月</option>
+                                    <option value="11">十一月</option>
+                                    <option value="12">十二月</option>
+                                </select>
+                                <span class="col-12 col-md nav-link text-center no-padding margin-top btn-text">
+                                    <button type="submit" class="btn btn-primary"><i class="mdi mdi-magnify"></i>搜尋</button>
+                                </span>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="rank-table">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>名字</th>
+                                    <th>身分證字號</th>
+                                    <th>借用日期</th>
+                                    <th>借用金額</th>
+                                    <th>還願日期</th>
+                                    <th>還願金額</th>
+                                    <th>備註</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.RitualMoneyRecords != null)
+                                {
+                                    foreach (var i in Model.RitualMoneyRecords)
+                                    {
+                                        <tr>
+                                            <td>@i.Member.Name</td>
+                                            <td>@i.Member.Identity</td>
+                                            <td>@i.BorrowDate</td>
+                                            <td>@String.Format("{0,-10:C0}", i.BorrowAmount)</td>
+                                            <td>@i.ReturnDate</td>
+                                            <td>@String.Format("{0,-10:C0}", i.ReturnAmount)</td>
+                                            @if (i.IsReturn)
+                                            {
+                                                <td><label class="badge badge-success">已還願</label></td>
+                                            }
+                                            else
+                                            {
+                                                <td><label class="badge badge-danger">未還</label></td>
+                                            }
+                                            <td class="btn-space">
+                                                <a class="btn btn-primary " asp-action="Edit" asp-route-id="@i.RitualMoneyRecordId"><i class="mdi mdi-grease-pencil"></i>編輯</a>
+                                                <a class="btn btn-inverse-danger" asp-action="DeleteRitualMoney" asp-route-id="@i.RitualMoneyRecordId"><i class="mdi mdi-delete-forever"></i>刪除</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <span class="nav-link text-center">
+                    @*<button class="btn btn-gradient-primary mt-4" id="ExportExcelBtn">匯出excel</button>*@
+                    <a class="btn btn-gradient-primary mt-4" id="ExportExcelBtn" href="">匯出excel</a>
+                </span>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts{
+    <script nonce="KUY8VewuvyUYVEIvEFue4vwyiuf">
+    $('document').ready(function () {
+        //產生excel連結
+        $('#ExportExcelBtn').attr('href', 'ExportExcel/?' + $('form').serialize());
+    })
+
+ 
+      
+
+
+    </script>
+
+}

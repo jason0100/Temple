@@ -1,0 +1,236 @@
+﻿@model temple.Models.MemberData.PostViewModel
+@{
+    ViewData["Title"] = "編輯信徒個人資料";
+}
+
+
+<!-- partial -->
+
+    <div class="page-header">
+        <h3 class="page-title">信徒個人資料</h3>
+        <input id="msg" hidden value="@TempData["msg"]" />
+        @if (TempData["isSuccess"] != null)
+        {
+            <input id="isSuccess" hidden value="@TempData["isSuccess"].ToString()" />
+        }
+        <div id="msgDiv"></div>
+    </div>
+<div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">編輯信徒個人資料</h4>
+                <p class="form-title card-description">基本資料</p>
+                <form class="forms-sample" method="post" asp-action="EditFriend" autocomplete="off">
+                    <div id="errorMsg" asp-validation-summary="All" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <label asp-for="member.MemberId" class="col-form-label" for=""></label>
+                            <input asp-for="member.MemberId" type="text" class="form-control" readonly>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 form-group required">
+                            <label asp-for="member.Name" class="col-form-label" for=""></label>
+                            <input asp-for="member.Name" type="text" class="form-control">
+                            <span asp-validation-for="member.Name" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4 form-group required">
+                            <label asp-for="member.Identity" class="col-form-label" for="idNumber"></label>
+                            <input asp-for="member.Identity" class="form-control" id="idNumber">
+                            <span asp-validation-for="member.Identity" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label class="col-form-label" for=""></label>
+
+                            <div class="row">
+                                <div class="col-md-3 form-group">
+                                    <div class="form-check">
+                                        <label asp-for="member.Gender" class="form-check-label">
+                                            <input asp-for="member.Gender" type="radio" class="form-check-input" value="M">男<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <div class="form-check">
+                                        <label asp-for="member.Gender" class="form-check-label">
+                                            <input asp-for="member.Gender" type="radio" class="form-check-input" value="F">女<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="member.Gender" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="form-title card-description">生日生辰</p>
+                    <div class="row">
+                        <div class="col-md-3 form-group">
+                            <label asp-for="member.Birth" class="col-form-label"></label>
+                            <input asp-for="member.Birth" class="form-control" placeholder="年-月-日" id="birthInput" />
+                            <span asp-validation-for="member.Birth" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label asp-for="member.LunarBirth" class="col-form-label"></label>
+                            <input asp-for="member.LunarBirth" class="form-control" placeholder="年-月-日" id="lunarBirthInput" />
+                            <span asp-validation-for="member.LunarBirth" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label asp-for="member.TimeOfLunarBirth" class="col-form-label" for="timeOfDate"></label>
+                            <select asp-for="member.TimeOfLunarBirth" class="form-control" id="timeOfDate">
+                                <option value="">請選擇</option>
+                                <option>子</option>
+                                <option>丑</option>
+                                <option>寅</option>
+                                <option>卯</option>
+                                <option>辰</option>
+                                <option>巳</option>
+                                <option>午</option>
+                                <option>未</option>
+                                <option>申</option>
+                                <option>酉</option>
+                                <option>戌</option>
+                                <option>亥</option>
+                            </select>
+                            <span asp-validation-for="member.TimeOfLunarBirth" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label asp-for="member.ZodiacAnimal" class="col-form-label" for="zodiacAnimal"></label>
+                            <select asp-for="member.ZodiacAnimal" class="form-control" id="zodiacAnimal">
+                                <option value="">請選擇</option>
+                                <option>鼠</option>
+                                <option>牛</option>
+                                <option>虎</option>
+                                <option>兔</option>
+                                <option>龍</option>
+                                <option>蛇</option>
+                                <option>馬</option>
+                                <option>羊</option>
+                                <option>猴</option>
+                                <option>雞</option>
+                                <option>狗</option>
+                                <option>豬</option>
+                            </select>
+                            <span asp-validation-for="member.ZodiacAnimal" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <p class="form-title card-description">聯絡方式</p>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label asp-for="member.Phone" class="col-form-label" for="userPhone"></label>
+                            <input asp-for="member.Phone" class="form-control" id="userPhone">
+                            <span asp-validation-for="member.Phone" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 form-group required">
+                            <label asp-for="member.CellPhone" class="col-form-label" for="userMobile"></label>
+                            <input asp-for="member.CellPhone" class="form-control" id="userMobile">
+                            <span asp-validation-for="member.CellPhone" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 form-group required">
+                            <label asp-for="member.CityId" class="col-form-label"></label>
+                            <select asp-for="member.CityId" class="form-control" id="selectCity" asp-items="Model.CityList">
+                                <option value="" selected disabled hidden>請選擇</option>
+                            </select>
+                            <span asp-validation-for="member.CityId" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4 form-group required">
+                            <label asp-for="member.TownshipId" class="col-form-label" for=""></label>
+                            <select asp-for="member.TownshipId" id="selectTownShip" type="text" class="form-control" asp-items="Model.TownShipList">
+                                <option value="" selected disabled hidden>請選擇</option>
+                            </select>
+                            <span asp-validation-for="member.TownshipId" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label asp-for="member.Zip" class="col-form-label" for=""></label>
+                            <input asp-for="member.Zip" type="text" class="form-control">
+
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label asp-for="member.Address" class="col-form-label" for=""></label>
+                            <input asp-for="member.Address" type="text" class="form-control">
+                            <span asp-validation-for="member.Address" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2" asp-action="Edit">存檔</button>
+                    <a class="btn btn-light" asp-action="GetMember">取消</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script nonce="KUY8VewuvyUYVEIvEFue4vwyiuf">
+        $(document).ready(function () {
+            $("#birthInput,#lunarBirthInput").datepicker({
+                dateFormat: "yy-mm-dd",
+                changeYear: true,
+                yearRange: "1919:",
+                beforeShow: function() {
+                    setTimeout(function(){
+                        $("#birthInput,#lunarBirthInput").attr("autocomplete", "off");
+                    }, 0);
+                 }
+            });
+
+              //==========Load city township zip=================
+        var dataObj;
+        $.get('/Friends/CityList').done(function (data) {
+                  console.log(data.isSuccess)
+            dataObj = $.parseJSON(data.data);
+            if (data.isSuccess) {
+                                $.each(dataObj, function (i, v) {
+                    //console.log(v.name)
+                    $("#selectCity").append($("<option></option>").attr("value", v.id).text(v.name));
+                })
+                   }
+            else {
+
+                showAlert('false','城市清單載入錯誤')
+            }
+
+        }
+        )
+
+        $('#selectCity').on('change', function () {
+
+            $('#selectTownShip option:not(:first)').remove();
+                        $.each(dataObj[$('#selectCity').val() - 1].townShips, function (i, v) {
+                   $("#selectTownShip").append($("<option></option>").attr("value", v.id).text(v.name));
+             })
+
+            $('#selectTownShip,#ZipInput').val('');
+
+        })
+
+        $('#selectTownShip').on('change', function () {
+            //console.log('township=' + $("#selectTownShip").val())
+            var townShipObj = dataObj[$('#selectCity').val() - 1].townShips
+
+            $.each(townShipObj, function (i, v) {
+                //console.log(v.zip)
+                if (v.id == $("#selectTownShip").val()) {
+                    $('#ZipInput').val(v.zip);
+                    return false;
+                }
+
+            });
+
+        })
+        //==========END Load city township zip=================
+        });
+
+
+ 
+    var msg = '@TempData["msg"]';
+    var IsSuccess = '@TempData["IsSuccess"]';
+    console.log(IsSuccess + msg);
+    if (msg != '') {
+        showAlert(IsSuccess, msg);
+    }
+    </script>
+
+
+}

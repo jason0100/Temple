@@ -1,0 +1,58 @@
+﻿@model temple.Models.RitualMoneyRecord.BorrowViewModel;
+@{
+    ViewData["Title"] = "借用發財金";
+}
+
+<!-- partial -->
+
+    <div class="page-header">
+        <h3 class="page-title">大土地發財金</h3>
+        <input id="msg" hidden value="@TempData["msg"]" />
+        @if (TempData["isSuccess"] != null)
+        {
+            <input id="isSuccess" hidden value="@TempData["isSuccess"].ToString()" />
+        }
+        <div id="msgDiv"></div>
+    </div>
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">借用發財金</h4>
+                <!-- <p class="form-title card-description">基本資料</p> -->
+                <form class="forms-sample" method="post" asp-action="CreateRitualMoney" autocomplete="off">
+                    <div id="errorMsg" asp-validation-summary="All" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <label class="col-form-label" asp-for="Name">姓名<span class="text-danger">(二擇一輸入)</span></label>
+                            <input class="form-control" asp-for="Name">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label class="col-form-label" asp-for="Identity">身分證字號<span class="text-danger">(二擇一輸入)</span></label>
+                            <input class="form-control" asp-for="Identity">
+                            <span asp-validation-for="Identity" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4 form-group required">
+                            <label class="col-form-label" asp-for="BorrowAmount">借取金額</label>
+                            <input class="form-control" asp-for="BorrowAmount">
+                            <span asp-validation-for="BorrowAmount" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">借用</button>
+                    <button type="button" class="btn btn-light" id="cancelBtn">清除</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script nonce="KUY8VewuvyUYVEIvEFue4vwyiuf">
+    $('#cancelBtn').click(function () {
+        $('input:not([name="__RequestVerificationToken"])').val("");
+    })
+
+    </script>
+}

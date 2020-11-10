@@ -1,0 +1,124 @@
+﻿@model  temple.Models.FinancialReport.QueryReportModel
+@{
+    ViewData["Title"] = "年度財務報表";
+}
+
+<div class="page-header">
+    <h3 class="page-title">年度財務報表</h3>
+      <input id="msg" hidden value="@TempData["msg"]" />
+</div>
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">@Model.Type</h4>
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-8 no-padding rank-space">
+                        <form method="get" asp-action="GetReport">
+                            <div class="row justify-content-center">
+                                <input hidden asp-for="Type" value=@Model.Type />
+                                <input type="text" class="col-10 col-md form-control margin-right margin-top" id="keyword-search" asp-for="Name" placeholder="關鍵字搜尋">
+                                <select class="col-10 col-md form-control margin-right margin-top" asp-for="Year">
+                                    <option>年份</option>
+                                    @for (int i = 2019; i < DateTime.Now.Year + 1; i++) { 
+                                        <option value=@i>@i</option>
+                                    }
+                                 
+                                </select>
+                                <span class="col-10 col-md-2 nav-link text-center no-padding margin-right margin-top btn-text">
+                                    <button type="submit" class="btn btn-primary"><i class="mdi mdi-magnify"></i>@(Model.Type)搜尋</button>
+                                </span>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="rank-table">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="th-title" colspan="13">@(TempData["Year"])年@(Model.Type)年報表</th>
+                                </tr>
+                            </thead>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>一月</th>
+                                    <th>二月</th>
+                                    <th>三月</th>
+                                    <th>四月</th>
+                                    <th>五月</th>
+                                    <th>六月</th>
+                                    <th>七月</th>
+                                    <th>八月</th>
+                                    <th>九月</th>
+                                    <th>十月</th>
+                                    <th>十一月</th>
+                                    <th>十二月</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.report.ReportItems != null)
+                                {
+                                    foreach (var i in Model.report.ReportItems)
+                                    {
+                                        <tr>
+                                            <td>@i.Name</td>
+                                            @foreach (var s in i.Subtotal)
+                                            {
+                                                <td>@String.Format("{0:#,#}", s)</td>
+                                            }
+                                        </tr>
+                                    }
+                                }
+
+
+                                <tr>
+                                    <td>總計</td>
+                                    @foreach (var i in Model.report.MonthSubtotal)
+                                    {
+                                        <td>@String.Format("{0:#,#}", i)</td>
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+                    <span class="nav-link text-center">
+                        <a class="btn btn-gradient-primary mt-4" id="ExportExcelBtn">匯出excel</a>
+                    </span>
+                </div>
+        </div>
+    </div>
+</div>
+       
+@section  Scripts  {
+<script nonce="KUY8VewuvyUYVEIvEFue4vwyiuf">
+       $('document').ready(function () {
+        //產生excel連結
+           $('#ExportExcelBtn').attr('href', 'ExportExcel/?' + $('form').serialize());
+
+           //更改支出顏色
+           //if (location.href.split)
+           console.log(location.href)
+           let githubURL = new URL(location.href);
+           let params= githubURL.searchParams;
+           var type = params.get('Type');
+           //console.log(type)
+           if (type == "支出") {
+                 $('table, tr').addClass('expense-color');
+           }
+          
+       })
+
+   
+    var msg = '@TempData["msg"]';
+    var isSuccess = '@TempData["IsSuccess"]';
+    //console.log("IsSuccess=" + isSuccess+ msg);
+    if (msg != '') {
+        showAlert(isSuccess, msg);
+    }
+</script>
+
+}
