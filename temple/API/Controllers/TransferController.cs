@@ -36,6 +36,9 @@ namespace API.Controllers
         public async Task<ResultModel> Post(TransferRecord record)
         {
             var result = new ResultModel();
+            var accessToken = Request.Headers["Authorization"];
+            var user = await _TokenGetUserHelper.GetUser(accessToken);
+
             try
             {
                 record.CreateDate = DateTime.Now.ToLocalTime();
@@ -49,11 +52,11 @@ namespace API.Controllers
             {
                 result.IsSuccess = false;
                 result.Message = "DB ERROR";
+                
             }
 
-            var accessToken = Request.Headers["Authorization"];
-            var user = await _TokenGetUserHelper.GetUser(accessToken);
-            logger.Info("userId=" + user.Id + ", username=" + user.UserName + $"\nCreate " + "TransferRecord id= " + record.Id + " successfully.");
+          
+            logger.Info("userId=" + user.Id + ", username=" + user.UserName + $"\nCreate " + "TransferRecord id= " + record.Id + " "+result.Message);
 
             return result;
         }
@@ -81,7 +84,8 @@ namespace API.Controllers
                         orderby f.CreateDate
                         select f;
             query = query.OrderByDescending(e => e.CreateDate);//日期最新優先排序
-            result.Data = query.ToList();
+            //result.Data = query.ToList();
+            result.Data = query;
             if (query.Count() == 0)
             {
                 result.Message = "查無轉帳紀錄";

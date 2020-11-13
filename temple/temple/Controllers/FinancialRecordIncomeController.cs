@@ -280,13 +280,13 @@ namespace temple.Controllers
         /// <param name="q"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<FileStreamResult> ExportExcel(QueryModel q, string Type)
+        public async Task<ActionResult> ExportExcel(QueryModel q, string Type)
         {
             ResultModel result = new ResultModel();
             //var data = JsonConvert.SerializeObject(q);
 
 
-            string targetUri = _config["api"] + "/FinancialRecord?";
+            string targetUri = _config["api"] + "/FinancialRecord";
             targetUri += q.GenerateQueryString();
             result = await _callApi.CallAPI(null, new Uri(targetUri), "GET");
 
@@ -366,7 +366,7 @@ namespace temple.Controllers
                          }
                     );
                     sheetData.AppendChild(row);
-
+                    
                     for (var i = 0; i < q.FinancialRecords.Count(); i++)
                     {
 
@@ -418,7 +418,7 @@ namespace temple.Controllers
                             }
                             , new Cell()
                             {
-                                CellValue = new CellValue(q.FinancialRecords[i].DueDate.ToString()),
+                                CellValue = new CellValue(q.FinancialRecords[i].DueDate),
                                 DataType = CellValues.String
                             }, new Cell()
                             {
@@ -435,7 +435,7 @@ namespace temple.Controllers
                     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 
             }
-            return null;
+            return new NoContentResult();
             //result.Data = q.RitualMoneyRecords;
             //return result;
         }

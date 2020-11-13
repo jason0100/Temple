@@ -15,7 +15,7 @@ using NLog;
 
 namespace API.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class RitualMoneyController : ControllerBase

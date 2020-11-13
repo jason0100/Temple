@@ -281,7 +281,7 @@ namespace temple.Controllers
         /// <param name="q"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<FileStreamResult> ExportExcel(QueryModel q)
+        public async Task<ActionResult> ExportExcel(QueryModel q)
         {
             ResultModel result = new ResultModel();
             //var data = JsonConvert.SerializeObject(q);
@@ -401,13 +401,13 @@ namespace temple.Controllers
                                 CellValue = new CellValue(q.FinancialRecords[i].FinancialItem.Name),
                                 DataType = CellValues.String
                             }
-                            ,
+                           ,
                             new Cell()
                             {
                                 CellValue = new CellValue(q.FinancialRecords[i].Quantity.ToString()),
                                 DataType = CellValues.String
                             }
-                            ,
+                           ,
                             new Cell()
                             {
                                 CellValue = new CellValue(q.FinancialRecords[i].Amount.ToString()),
@@ -420,12 +420,14 @@ namespace temple.Controllers
                             }
                             , new Cell()
                             {
-                                CellValue = new CellValue(q.FinancialRecords[i].DueDate.ToString()),
-                                DataType = CellValues.String
+								//CellValue = new CellValue(q.FinancialRecords[i].DueDate),
+								CellValue = new CellValue(""),
+								DataType = CellValues.String
                             }, new Cell()
                             {
-                                CellValue = new CellValue(q.FinancialRecords[i].Notes),
-                                DataType = CellValues.String
+								CellValue = new CellValue(q.FinancialRecords[i].Notes),
+								//CellValue = new CellValue(""),
+								DataType = CellValues.String
                             }
                         );
                         sheetData.AppendChild(row);

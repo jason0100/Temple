@@ -14,8 +14,8 @@ namespace API.Models.FinancialRecord
         //[Required]
         public string CustomerName { get; set; }
 
-        [Required(ErrorMessage = "請輸入電話")]
-        [RegularExpression(@"^09\d{8}$", ErrorMessage = "ex:09xxxxxxxx")]
+        //[Required(ErrorMessage = "請輸入電話")]
+        //[RegularExpression(@"^09\d{8}$", ErrorMessage = "ex:09xxxxxxxx")]
         public string CustomerPhone { get; set; }
         public string LandPhone { get; set; }
 

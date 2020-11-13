@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.FlowAnalysis;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 
 namespace temple.Models.FinancialRecord
@@ -14,8 +16,8 @@ namespace temple.Models.FinancialRecord
         [Required(ErrorMessage = "請輸入名稱")]
         public string CustomerName { get; set; }
 
-        [Required(ErrorMessage = "請輸入電話")]
-        [RegularExpression(@"^09\d{8}$", ErrorMessage = "ex:09xxxxxxxx")]
+        //[Required(ErrorMessage = "請輸入手機號碼")]
+        //[RegularExpression(@"^09\d{8}$", ErrorMessage = "ex:09xxxxxxxx")]
         public string CustomerPhone { get; set; }
         public string LandPhone { get; set; }
 
@@ -30,7 +32,7 @@ namespace temple.Models.FinancialRecord
 
 
         //[RegularExpression(@"\d{4}-\d{2}-\d{2}", ErrorMessage = "ex:2020-01-01")]
-        public string DueDate { get; set; }
+        public string? DueDate { get; set; }
 
         /// <summary>
         /// 龍邊or虎邊
@@ -44,7 +46,7 @@ namespace temple.Models.FinancialRecord
 
         //[DataType(DataType.Date)]
         //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
-        public string ReturnDate { get; set; }
+        public string? ReturnDate { get; set; }
         public string CreateDate { get; set; }
 
         public IEnumerable<SelectListItem> FinancialItems { get; set; }
@@ -54,25 +56,49 @@ namespace temple.Models.FinancialRecord
 
         public FinancialItem.FinancialItem FinancialItem { get; set; }
 
+        
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
+            string msg = "";
+            var ele = new string[] { };
+
             if (FinancialItemId == 57 || FinancialItemId == 75)
             {
                 if (string.IsNullOrEmpty(Place))
-                    yield return new ValidationResult("必填", new string[] { "Place" });
-                if (Position == null)
-                    yield return new ValidationResult("必填", new string[] { "Position" });
-                if (string.IsNullOrEmpty(DueDate))
-                    yield return new ValidationResult("必填", new string[] { "DueDate" });
-                else {
+				{
+                    msg += "必填";
+                    ele.Append("Place");
+                }
+
+                //result.MemberNames = new string[] { "Place" };
+                //    yield return new ValidationResult("必填", new string[] { "Place" });
+                if (Position == null) {
+                    msg += "必填";
+                    ele.Append("Position");
+                }
+                //yield return new ValidationResult("必填", new string[] { "Position" });
+                if (string.IsNullOrEmpty(DueDate)) {
+                    msg += "必填";
+                    ele.Append("DueDate");
+                }
+                    //yield return new ValidationResult("必填", new string[] { "DueDate" });
+               
                     DateTime result;
                     if (!DateTime.TryParse(DueDate, out result))
                     {
-                        yield return new ValidationResult("日期錯誤", new string[] { "DueDate" });
-                    }
+                    msg += "日期錯誤";
+                    ele.Append("DueDate");
+                    //yield return new ValidationResult("日期錯誤", new string[] { "DueDate" });
+                }
+
+                if (!string.IsNullOrEmpty(msg))
+                {
+                    yield return new ValidationResult(msg, ele);
                 }
 
             }
+
+            
 
         }
     }
